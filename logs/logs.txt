@@ -1,0 +1,9 @@
+[SUCCESS] Home page layout updated with Framer Motion and Shadcn UI structure. Xanh Mono font applied globally. Illustration SVG added. All steps completed without errors.
+
+[INFO] Installed Framer Motion and Shadcn UI dependencies successfully.
+
+[INFO] Created logs.txt for tracking future attempts.
+
+[SUCCESS] Fixed CSS @import error by moving Google Fonts import to the top of globals.css. Updated hero section to use note.png as background image instead of SVG. All linter errors cleared.
+
+[SUCCESS] Fixed 'Element type is invalid' error by adding 'use client' directive to src/app/page.tsx for compatibility with Framer Motion and Next.js Image.
