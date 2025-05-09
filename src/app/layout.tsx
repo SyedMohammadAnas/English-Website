@@ -26,6 +26,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* Add Google Fonts link for Xanh Mono to ensure font loads in production (Vercel, etc.) */}
+      <head>
+        {/* Xanh Mono font from Google Fonts for all text elements */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Xanh+Mono:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       {/* Use flex column layout to anchor nav to bottom */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#2d2d2d] min-h-screen flex flex-col justify-between`}>
         {/* Header Section - persists across all pages */}
