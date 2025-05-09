@@ -45,9 +45,9 @@ export default function PyqsPage() {
           });
         setPdfs(urls);
         // Debug: Log Supabase config
-        // @ts-expect-error
+        // @ts-expect-error: Supabase client type may not expose 'url' property
         console.log("SUPABASE_URL:", supabase?.url);
-        // @ts-expect-error
+        // @ts-expect-error: Supabase client type may not expose 'key' property
         console.log("SUPABASE_ANON_KEY (partial):", supabase?.key?.slice?.(0, 8));
         // Test direct public URL fetch for a known file
         const testFile = "18LEH101J Jan 2019.pdf";
