@@ -53,7 +53,7 @@ export default function RootLayout({
           {/* Navigation Items with Pill Hover Effect */}
           {[
             { label: 'Assignments', href: '/assignments' },
-            { label: 'Classwork', href: '#' },
+            { label: 'Classwork', href: '/classwork' },
             { label: 'PYQs', href: '#' },
             { label: 'Sessions', href: '#' },
             { label: 'PBL', href: '#' },
