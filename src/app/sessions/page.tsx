@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -24,6 +24,8 @@ export default function SessionsGallery() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   // State to pause on hover
   const [isPaused, setIsPaused] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
 
   // Start auto sliding
   useEffect(() => {
@@ -40,27 +42,45 @@ export default function SessionsGallery() {
   // Handler for manual navigation
   const goTo = (idx: number) => setIndex(idx);
 
+  // Open modal with current image
+  const openModal = useCallback((idx: number) => {
+    setModalIndex(idx);
+    setModalOpen(true);
+  }, []);
+
+  // Close modal
+  const closeModal = useCallback(() => setModalOpen(false), []);
+
+  // Keyboard navigation for modal
+  useEffect(() => {
+    if (!modalOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") setModalIndex((i) => (i + 1) % sessionImages.length);
+      if (e.key === "ArrowLeft") setModalIndex((i) => (i - 1 + sessionImages.length) % sessionImages.length);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [modalOpen, closeModal]);
+
   return (
-    <div className="min-h-screen w-full flex flex-col items-center bg-[#232323] relative" style={{ fontFamily: 'Xanh Mono, monospace' }}>
-      {/* Panorama Full-Width Background with Overlay */}
-      <div className="relative w-full h-[38vh] min-h-[220px] max-h-[340px] flex items-center justify-center overflow-hidden">
-        {/* Panorama Image as background */}
+    <div className="min-h-screen w-full flex flex-col items-center relative overflow-hidden" style={{ fontFamily: 'Xanh Mono, monospace' }}>
+      {/* Full-Screen Panorama Background with Overlay */}
+      <div className="fixed inset-0 w-full h-full -z-10">
         <Image
           src={`/images/sessions/${panoramaImage}`}
           alt="Panorama Session Background"
           fill
-          style={{ objectFit: "cover", zIndex: 1 }}
+          style={{ objectFit: "cover" }}
           priority
         />
         {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black/60 z-10" />
-        {/* Title over background */}
-        <h1 className="absolute z-20 text-4xl md:text-5xl font-bold text-[#fde7c3] drop-shadow-lg text-center w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ fontFamily: 'Xanh Mono, monospace' }}>
-          Sessions Gallery
-        </h1>
+        <div className="absolute inset-0 bg-black/70" />
       </div>
-      {/* Carousel Card Floating Below Background */}
-      <div className="w-full flex justify-center -mt-20 md:-mt-28 z-30 relative">
+      {/* Spacer for header */}
+      <div className="h-[8vh] w-full" />
+      {/* Carousel Card Floating Above Background */}
+      <div className="w-full flex justify-center z-30 relative mt-8">
         <div
           className="w-full max-w-2xl bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border-4 border-[#fde7c3] p-6 flex flex-col items-center"
           style={{ boxShadow: '0 8px 32px 0 rgba(34, 34, 34, 0.25)' }}
@@ -68,7 +88,7 @@ export default function SessionsGallery() {
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Animated Carousel */}
-          <div className="relative w-full h-72 flex items-center justify-center mb-4">
+          <div className="relative w-full h-72 flex items-center justify-center mb-4 bg-black/30 rounded-xl cursor-zoom-in" onClick={() => openModal(index)}>
             <AnimatePresence initial={false}>
               <motion.div
                 key={index}
@@ -83,7 +103,7 @@ export default function SessionsGallery() {
                   alt={`Session ${index + 1}`}
                   width={600}
                   height={288}
-                  className="rounded-xl border-2 border-[#fde7c3] shadow-lg object-cover w-full h-64 transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
+                  className="rounded-xl border-2 border-[#fde7c3] shadow-lg object-contain w-full h-64 bg-black"
                   style={{ fontFamily: 'Xanh Mono, monospace' }}
                   priority
                 />
@@ -117,6 +137,67 @@ export default function SessionsGallery() {
       <div className="mt-16 text-[#fde7c3] text-lg text-center max-w-2xl z-40" style={{ fontFamily: 'Xanh Mono, monospace' }}>
         Relive the best moments from our sessions! Hover over images for a closer look.
       </div>
+      {/* Fullscreen Modal Viewer */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+            onClick={closeModal}
+            aria-modal="true"
+            tabIndex={-1}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative max-w-[96vw] max-h-[92vh] flex flex-col items-center"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="absolute top-2 right-2 text-[#fde7c3] text-3xl font-bold bg-black/60 rounded-full px-3 py-1 hover:bg-[#fde7c3] hover:text-black transition"
+                aria-label="Close"
+                style={{ fontFamily: 'Xanh Mono, monospace' }}
+              >
+                ×
+              </button>
+              {/* Prev Button */}
+              <button
+                onClick={() => setModalIndex((i) => (i - 1 + sessionImages.length) % sessionImages.length)}
+                className="absolute left-2 top-1/2 -translate-y-1/2 text-[#fde7c3] text-4xl font-bold bg-black/60 rounded-full px-3 py-1 hover:bg-[#fde7c3] hover:text-black transition"
+                aria-label="Previous"
+                style={{ fontFamily: 'Xanh Mono, monospace' }}
+              >
+                ‹
+              </button>
+              {/* Next Button */}
+              <button
+                onClick={() => setModalIndex((i) => (i + 1) % sessionImages.length)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#fde7c3] text-4xl font-bold bg-black/60 rounded-full px-3 py-1 hover:bg-[#fde7c3] hover:text-black transition"
+                aria-label="Next"
+                style={{ fontFamily: 'Xanh Mono, monospace' }}
+              >
+                ›
+              </button>
+              {/* Fullscreen Image */}
+              <Image
+                src={`/images/sessions/${sessionImages[modalIndex]}`}
+                alt={`Session Full ${modalIndex + 1}`}
+                width={1200}
+                height={800}
+                className="object-contain rounded-2xl border-4 border-[#fde7c3] bg-black max-w-[90vw] max-h-[80vh] shadow-2xl"
+                style={{ fontFamily: 'Xanh Mono, monospace' }}
+                priority
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

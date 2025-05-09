@@ -45,9 +45,9 @@ export default function PyqsPage() {
           });
         setPdfs(urls);
         // Debug: Log Supabase config
-        // @ts-ignore
+        // @ts-expect-error
         console.log("SUPABASE_URL:", supabase?.url);
-        // @ts-ignore
+        // @ts-expect-error
         console.log("SUPABASE_ANON_KEY (partial):", supabase?.key?.slice?.(0, 8));
         // Test direct public URL fetch for a known file
         const testFile = "18LEH101J Jan 2019.pdf";
