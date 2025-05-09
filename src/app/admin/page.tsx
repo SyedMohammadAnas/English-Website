@@ -132,20 +132,18 @@ export default function AdminPage() {
   // Fetch assignments on mount and after modal closes (successful add)
   useEffect(() => {
     fetchAssignments();
-    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     if (!open) {
       fetchAssignments();
     }
-    // eslint-disable-next-line
   }, [open]);
 
   // Helper to upload a single file to Supabase Storage and return its public URL
   const uploadPdf = async (file: File) => {
     // Use a unique filename: timestamp + original name
     const filePath = `${Date.now()}-${file.name}`;
-    const { data, error } = await supabase.storage.from('classwork-pdfs').upload(filePath, file, {
+    const { error } = await supabase.storage.from('classwork-pdfs').upload(filePath, file, {
       cacheControl: '3600',
       upsert: false,
     });
@@ -181,13 +179,11 @@ export default function AdminPage() {
   // Fetch classwork on mount and after modal closes (successful add)
   useEffect(() => {
     fetchClassworks();
-    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     if (!classworkOpen) {
       fetchClassworks();
     }
-    // eslint-disable-next-line
   }, [classworkOpen]);
 
   // Render password prompt if not authenticated
@@ -452,8 +448,12 @@ export default function AdminPage() {
                             setCwSuccess("");
                           }, 1000);
                         }
-                      } catch (err: any) {
-                        setCwError(err.message || "Unknown error");
+                      } catch (err) {
+                        if (err instanceof Error) {
+                          setCwError(err.message);
+                        } else {
+                          setCwError("Unknown error");
+                        }
                       } finally {
                         setCwLoading(false);
                       }
@@ -591,8 +591,12 @@ export default function AdminPage() {
                         setSubmitSuccess("");
                       }, 1000);
                     }
-                  } catch (err: any) {
-                    setSubmitError(err.message || "Unknown error");
+                  } catch (err) {
+                    if (err instanceof Error) {
+                      setSubmitError(err.message);
+                    } else {
+                      setSubmitError("Unknown error");
+                    }
                   } finally {
                     setLoading(false);
                   }
