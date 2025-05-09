@@ -20,7 +20,8 @@ export default function Home() {
         </h1>
         {/* Subheading Paragraph - Responsive Max Width */}
         <p className="text-base sm:text-lg md:text-2xl text-gray-300 max-w-xs sm:max-w-lg md:max-w-2xl" style={{ fontFamily: 'Xanh Mono, monospace' }}>
-          Welcome to our English Classroom, a vibrant and engaging platform designed for college students. Here, you'll find a wealth of resources
+          {/* Escaped single quote to fix react/no-unescaped-entities */}
+          Welcome to our English Classroom, a vibrant and engaging platform designed for college students. Here, you&apos;ll find a wealth of resources
         </p>
       </motion.div>
       {/* Illustration Below the Text - Responsive Sizing, background matches page */}

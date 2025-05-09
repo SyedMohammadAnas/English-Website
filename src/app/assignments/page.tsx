@@ -3,9 +3,19 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
+// Define the shape of an assignment entry
+interface Assignment {
+  id: number;
+  title: string;
+  details?: string;
+  files?: string[];
+  deadline?: string;
+  created_at?: string;
+}
+
 export default function AssignmentsPage() {
   // State to store assignments
-  const [assignments, setAssignments] = useState<any[]>([]);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
   // State for loading and error
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,8 +36,12 @@ export default function AssignmentsPage() {
         } else {
           setAssignments(data || []);
         }
-      } catch (err: any) {
-        setError(err.message || 'Unknown error');
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Unknown error');
+        }
       } finally {
         setLoading(false);
       }

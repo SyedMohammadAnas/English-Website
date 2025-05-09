@@ -6,6 +6,24 @@ import { supabase } from "@/lib/supabaseClient";
 // Admin password (for demo purposes, in production use env vars and server-side auth)
 const ADMIN_PASSWORD = "admin123";
 
+// Define the shape of an assignment entry
+interface Assignment {
+  id: number;
+  title: string;
+  details?: string;
+  files?: string[];
+  deadline?: string;
+  created_at?: string;
+}
+// Define the shape of a classwork entry
+interface Classwork {
+  id: number;
+  title: string;
+  details?: string;
+  files?: string[];
+  created_at?: string;
+}
+
 export default function AdminPage() {
   // State to track password input and access
   const [input, setInput] = useState("");
@@ -23,7 +41,7 @@ export default function AdminPage() {
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
   // State for assignments list, loading, and error
-  const [assignments, setAssignments] = useState<any[]>([]);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [fetching, setFetching] = useState(false);
   const [fetchError, setFetchError] = useState("");
   // State for tab selection (Assignments or Classwork)
@@ -40,7 +58,7 @@ export default function AdminPage() {
   const [cwSuccess, setCwSuccess] = useState("");
   // --- CLASSWORK FETCH STATE ---
   // State for classwork list, loading, and error
-  const [classworks, setClassworks] = useState<any[]>([]);
+  const [classworks, setClassworks] = useState<Classwork[]>([]);
   const [classworkLoading, setClassworkLoading] = useState(false);
   const [classworkError, setClassworkError] = useState("");
 
@@ -99,8 +117,13 @@ export default function AdminPage() {
       } else {
         setAssignments(data || []);
       }
-    } catch (err: any) {
-      setFetchError(err.message || "Unknown error");
+    } catch (err) {
+      // Type guard for error
+      if (err instanceof Error) {
+        setFetchError(err.message);
+      } else {
+        setFetchError("Unknown error");
+      }
     } finally {
       setFetching(false);
     }
@@ -143,8 +166,13 @@ export default function AdminPage() {
       } else {
         setClassworks(data || []);
       }
-    } catch (err: any) {
-      setClassworkError(err.message || "Unknown error");
+    } catch (err) {
+      // Type guard for error
+      if (err instanceof Error) {
+        setClassworkError(err.message);
+      } else {
+        setClassworkError("Unknown error");
+      }
     } finally {
       setClassworkLoading(false);
     }
