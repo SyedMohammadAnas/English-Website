@@ -111,8 +111,9 @@ export default function AssignmentsPage() {
       <div className="w-full flex flex-col items-center">
         {!loading && !error && assignments.map((a) => {
           // Calculate days left if deadline exists
-          const showDaysLeft = a.deadline;
-          const days = showDaysLeft ? daysLeft(a.deadline) : null;
+          const showDaysLeft = typeof a.deadline === 'string' && a.deadline.length > 0;
+          // Only call daysLeft if a.deadline is a string
+          const days = showDaysLeft ? daysLeft(a.deadline as string) : null;
           return (
             <div
               key={a.id}
