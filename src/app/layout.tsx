@@ -71,7 +71,7 @@ export default function RootLayout({
           {[
             { label: 'Assignments', href: '/assignments' },
             { label: 'Classwork', href: '/classwork' },
-            { label: 'PYQs', href: '#' },
+            { label: 'PYQs', href: '/pyqs' },
             { label: 'Sessions', href: '#' },
             { label: 'PBL', href: '#' },
           ].map((item) => (
