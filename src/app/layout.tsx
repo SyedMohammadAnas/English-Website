@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import BackToTopButton from "./components/BackToTopButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,18 +62,21 @@ export default function RootLayout({
         </header>
 
         {/* Main content area for pages */}
-        <main className="flex-1 flex flex-col min-h-[70vh]">
+        <main className="flex-1 flex flex-col min-h-[70vh] pb-20">
           {children}
         </main>
 
-        {/* Bottom Navigation Bar - always at the bottom */}
-        <nav className="w-full bg-black flex flex-wrap justify-center items-center gap-6 sm:gap-12 md:gap-20 py-4 sm:py-6">
+        {/* Back to Top Button - client component, only visible after scrolling */}
+        <BackToTopButton />
+
+        {/* Bottom Navigation Bar - always at the bottom, persistent */}
+        <nav className="fixed bottom-0 left-0 w-full bg-black flex flex-wrap justify-center items-center gap-6 sm:gap-12 md:gap-20 py-4 sm:py-6 z-50 border-t border-[#fde7c3]" style={{ fontFamily: 'Xanh Mono, monospace' }}>
           {/* Navigation Items with Pill Hover Effect */}
           {[
             { label: 'Assignments', href: '/assignments' },
             { label: 'Classwork', href: '/classwork' },
             { label: 'PYQs', href: '/pyqs' },
-            { label: 'Sessions', href: '#' },
+            { label: 'Sessions', href: '/sessions' },
             { label: 'PBL', href: '#' },
           ].map((item) => (
             <Link

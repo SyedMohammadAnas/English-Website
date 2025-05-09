@@ -66,9 +66,21 @@ export default function PyqsPage() {
   return (
     <div className="min-h-screen bg-[#2d2d2d] flex flex-col items-center py-8 px-4">
       {/* Page Title */}
-      <h1 className="text-3xl font-bold text-[#fde7c3] mb-8" style={{ fontFamily: 'Xanh Mono, monospace' }}>
+      <h1 className="text-3xl font-bold text-[#fde7c3] mb-4" style={{ fontFamily: 'Xanh Mono, monospace' }}>
         Previous Year Questions (PYQs)
       </h1>
+      {/* Extra PYQs Link */}
+      <div className="mb-6">
+        <a
+          href="https://thehelpers.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-blue-400 hover:text-blue-300 text-lg font-bold"
+          style={{ fontFamily: 'Xanh Mono, monospace' }}
+        >
+          Find more PYQs at this website
+        </a>
+      </div>
       {/* Loading/Error States */}
       {loading && (
         <div className="text-[#fde7c3] text-lg" style={{ fontFamily: 'Xanh Mono, monospace' }}>Loading PYQs...</div>
