@@ -17,3 +17,7 @@ Classwork button in bottom navigation bar updated to link to /classwork page. [S
 [Success] Sessions Gallery page created at src/app/sessions/page.tsx with animated carousel, hover effects, and Xanh Mono font. Footer navigation updated to link to Sessions Gallery. framer-motion v12.10.4 already present.
 
 [Success] Fixed build error: replaced all // @ts-ignore with // @ts-expect-error in src/app/pyqs/page.tsx as per linter requirements. Font warning in layout.tsx is informational and not a build blocker for App Router.
+
+[SUCCESS] [2024-06-09] Created src/app/pbl/page.tsx to display and embed three PDFs from /public/pbl with a clean layout. Ensured Xanh Mono font utility class is correct (font-xanhmono). All linter and formatting rules followed.
+
+[SUCCESS] [2024-06-09] Fixed hydration error on PBL page by removing fallback from inside iframe. Improved color scheme for better contrast. Updated footer navigation so PBL button links to /pbl. All linter and formatting rules followed.

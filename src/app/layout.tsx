@@ -77,7 +77,7 @@ export default function RootLayout({
             { label: 'Classwork', href: '/classwork' },
             { label: 'PYQs', href: '/pyqs' },
             { label: 'Sessions', href: '/sessions' },
-            { label: 'PBL', href: '#' },
+            { label: 'PBL', href: '/pbl' },
           ].map((item) => (
             <Link
               key={item.label}
