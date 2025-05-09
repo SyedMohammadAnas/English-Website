@@ -30,7 +30,7 @@ const PBLPage = () => {
       {/* PDF Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl">
         {/* Map through each PDF and embed it */}
-        {pdfs.map((pdf, idx) => (
+        {pdfs.map((pdf) => (
           // Card with white background, border, and shadow for clarity
           <section key={pdf.title} className="flex flex-col items-center bg-white border border-neutral-200 rounded-lg shadow-lg p-4">
             {/* PDF Title */}
