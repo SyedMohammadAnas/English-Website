@@ -11,3 +11,5 @@
 Classwork page created successfully in src/app/classwork/page.tsx. Displays data from 'classwork' table and embeds PDFs for each entry. [SUCCESS]
 
 Classwork button in bottom navigation bar updated to link to /classwork page. [SUCCESS]
+
+[Success] Updated logo in header to use public/images/logo.png via next/image in src/app/layout.tsx - [REASON]: Replaced emoji with new logo as per user request.

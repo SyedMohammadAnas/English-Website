@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +32,16 @@ export default function RootLayout({
         <header className="w-full flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 bg-black gap-4 sm:gap-0">
           {/* Logo and Title */}
           <div className="flex items-center gap-3">
-            {/* Placeholder for logo icon */}
-            <span className="text-2xl sm:text-3xl">🌀</span>
+            {/* Logo image using next/image for optimization */}
+            <Image
+              src="/images/logo.png"
+              alt="Classmate Logo"
+              width={36}
+              height={36}
+              priority
+              style={{ objectFit: 'contain' }}
+            />
+            {/* App title with Xanh Mono font */}
             <span className="text-2xl sm:text-3xl font-bold text-white" style={{ fontFamily: 'Xanh Mono, monospace' }}>Classmate</span>
           </div>
           {/* Navigation Links with Responsive Spacing */}
