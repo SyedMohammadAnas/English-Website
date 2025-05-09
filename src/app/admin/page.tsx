@@ -266,7 +266,7 @@ export default function AdminPage() {
                 <ul className="flex flex-col gap-4">
                   {assignments.map((a) => (
                     <li key={a.id} className="bg-[#232323] rounded-lg p-4 border border-[#fde7c3] flex flex-col gap-2">
-                      <div centsName="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <span className="text-lg font-bold text-[#f5d7b7]" style={{ fontFamily: 'Xanh Mono, monospace' }}>{a.title}</span>
                         {a.deadline && (
                           <span className="text-sm text-[#fde7c3]" style={{ fontFamily: 'Xanh Mono, monospace' }}>
